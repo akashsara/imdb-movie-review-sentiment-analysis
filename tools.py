@@ -3,7 +3,7 @@ import numpy as np
 from nptyping import NDArray
 
 
-def sigmoid(x: int) -> np.float64:
+def sigmoid(x: NDArray[np.float64]) -> np.float64:
     """
     Squashes the given input quantity into the [0,1] range.
     """
@@ -11,7 +11,7 @@ def sigmoid(x: int) -> np.float64:
 
 
 def initialize_weights(
-    shape: tuple, mode: str = "uniform", low: float = -0.5, high: float = 0.5
+    shape: tuple, mode: tuple = ("uniform", {"low": -0.5, "high": 0.5})
 ) -> NDArray[np.float64]:
     """
     Returns an initialized weight matrix of the required shape.
@@ -24,8 +24,10 @@ def initialize_weights(
     I've set low=-0.5 and high = 0.5 as default values as required.
     However, since they are supplied as arguments, they can be changed.
     """
+    kwargs = mode[1]
+    mode = mode[0]
     if mode == "uniform":
-        return np.random.uniform(low=low, high=high, size=shape)
+        return np.random.uniform(size=shape, **kwargs)
     elif mode == "zero":
         return np.zeros(shape=shape)
     else:
@@ -37,33 +39,3 @@ def initialize_bias(value: float = 0.0) -> float:
     Seems like a useless function but I'd rather have this called explicitly.
     """
     return value
-
-
-def binary_cross_entropy_loss(
-    y: NDArray[int], y_hat: NDArray[np.float64]
-) -> NDArray[np.float64]:
-    """
-    Binary CrossEntropy Loss is defined as:
-        loss = -[y * log(yhat) + (1 - y) * log(1 - yhat)]
-        When y = 1:
-            loss = -log(yhat)
-        When y = 0:
-            loss = -log(1 - yhat)
-    """
-    return np.where(y == 1, -np.log(y_hat), -np.log(1 - y_hat))
-
-
-def cost_function(
-    y_true: NDArray[int],
-    y_hat: NDArray[np.float64],
-    loss_function=binary_cross_entropy_loss,
-) -> np.float64:
-    """
-    The cost function is simply the average of all the losses.
-    Given our y_true and y_hat, we calculate the loss for each datapoint.
-    We then take the average of this loss and return it.
-    This function is independent of the number of data points.
-    So it can be used for any batch size.
-    """
-    losses = loss_function(y_true, y_hat)
-    return np.sum(losses) / len(losses)
