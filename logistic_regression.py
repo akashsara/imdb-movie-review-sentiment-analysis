@@ -10,6 +10,8 @@ from metrics import accuracy_metric
 # TODO: Testing
 # TODO: Set up random seeds
 
+GLOBAL_SEED = 42
+
 
 class LogisticRegression:
     def __init__(
@@ -108,6 +110,13 @@ class LogisticRegression:
 
         return batch_generator(x, batch_size)
 
+    def shuffle_features_and_labels_together(features, labels, seed):
+        np.random.seed(seed)
+        np.random.shuffle(features)
+        np.random.seed(seed)
+        np.random.shuffle(labels)
+        return features, labels
+
     def train(
         self,
         x_train: NDArray[int],
@@ -137,10 +146,11 @@ class LogisticRegression:
         validation_accuracy = []
         for epoch in len(epochs):
             # === Training ===
-            shuffled_indices = np.arange(x_train.shape[0])
-            np.random.shuffle(shuffled_indices)
-            x_batches = make_batches(x_train[shuffled_indices], batch_size)
-            y_batches = make_batches(y_train[shuffled_indices], batch_size)
+            x_train, y_train = shuffle_features_and_labels_together(
+                x_train, y_train, GLOBAL_SEED
+            )
+            x_batches = make_batches(x_train, batch_size)
+            y_batches = make_batches(y_train, batch_size)
             loss = 0
             for x, y in zip(x_batches, y_batches):
                 loss += self.step(x, y)
