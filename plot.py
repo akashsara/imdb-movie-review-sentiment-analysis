@@ -1,10 +1,16 @@
 import matplotlib.pyplot as plt
+from typing import List
 
-def plot_per_epoch(train, val, mode, save_as):
-    plt.figure(figsize=(12,4))
+
+def plot_per_epoch(train: List[float], val: List[float], metric: str, save_as: str):
+    """
+    Plots some training and validation metric with respect to epochs (time).
+    Saves the plot with the filename specified in save_as.
+    """
+    plt.figure(figsize=(12, 4))
     plt.plot(train)
     plt.plot(val)
-    plt.legend([f'training {mode}', f'validation {mode}'], loc='lower right')
-    plt.xlabel('Epoch')
+    plt.legend([f"training {metric}", f"validation {metric}"], loc="lower right")
+    plt.xlabel("Epoch")
     plt.ylabel(mode)
     plt.savefig(save_as)

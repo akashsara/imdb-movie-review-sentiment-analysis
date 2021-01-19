@@ -8,7 +8,6 @@ import helper_functions
 import loss_functions
 import metrics
 
-# TODO: Testing
 
 GLOBAL_SEED = 42
 
