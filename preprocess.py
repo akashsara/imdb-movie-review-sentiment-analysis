@@ -101,6 +101,10 @@ word2id = {
 }
 id2word = {i: word for word, i in word2id.items()}
 
+# Create Data Folder
+if not os.path.exists("data"):
+    os.mkdir("data")
+
 # Save vocabulary info
 with open(os.path.join("data", "vocabulary.pkl"), "wb") as fp:
     pickle.dump((word2id, id2word, word_counts), fp)
