@@ -14,7 +14,7 @@ def cost_function(
     This function is independent of the number of data points.
     So it can be used for any batch size.
     """
-    losses = loss_function(y_true, y_hat)
+    losses = loss(y_true, y_hat)
     return np.sum(losses) / len(losses)
 
 
