@@ -48,7 +48,7 @@ class LogisticRegression:
         """
         Computes the value of the cost function for the given parameters.
         y_true: [N_data]
-        y_hat: [N_data] 
+        y_hat: [N_data]
         """
         return loss_functions.cost_function(
             y_true, y_hat, loss=loss_functions.binary_cross_entropy_loss
@@ -72,7 +72,9 @@ class LogisticRegression:
         self.weights -= self.learning_rate * dW
         self.bias -= self.learning_rate * dB
 
-    def step(self, x: NDArray[int], y_true: NDArray[int]) -> np.float64:
+    def step(
+        self, x: NDArray[int], y_true: NDArray[int]
+    ) -> (np.float64, NDArray[np.float64]):
         """
         One step of our optimization.
         x: [N_data, N_features]
@@ -88,7 +90,7 @@ class LogisticRegression:
         y_hat = self.forward(x)
         loss = self.compute_loss(y_true, y_hat)
         self.backward(x, y_true, y_hat)
-        return loss
+        return loss, y_hat
 
     def predict(
         self, x: NDArray[int], batch_size: int = 20
@@ -97,7 +99,7 @@ class LogisticRegression:
         This is the function we'll use for making predictions.
         x: [N_data, N_features]
         Pseudocode:
-            Predict on data 
+            Predict on data
             Returns (preds, proba)
         Where logits are the raw outputs of the model and
         predictions are the rounded integer predictions.
@@ -136,7 +138,7 @@ class LogisticRegression:
         Shuffles the given NDArrays on the first axis alone.
         So we are only randomizing the order of the features & labels.
         Note that due to us setting the seed explicitly, the mapping
-        between the features and the labels in maintained. 
+        between the features and the labels in maintained.
         """
         np.random.seed(seed)
         np.random.shuffle(features)
@@ -167,12 +169,14 @@ class LogisticRegression:
                     loss += this batch's loss
                 Divide loss / num_batches
                 Append loss to list of training losses.
+                Compute our train accuracy & add to list of train accuracies.
                 === Validation ===
                 [No need to shuffle since we aren't learning here]
                 Get predictions on the validation data.
-                Compute our validation accuracy & add to list of accuracies.
+                Compute our validation accuracy & add to list of val accuracies.
         """
         training_loss = []
+        training_accuracy = []
         validation_accuracy = []
         for epoch in range(len(epochs)):
             # === Training ===
@@ -182,9 +186,14 @@ class LogisticRegression:
             x_batches = make_batches(x_train, batch_size)
             y_batches = make_batches(y_train, batch_size)
             loss = 0
+            predictions = []
             for x, y in zip(x_batches, y_batches):
-                loss += self.step(x, y)
+                batch_loss, preds = self.step(x, y)
+                loss += batch_loss
+                predictions.extend(np.round(preds).astype(int))
             training_loss.append(loss / len(batches))
+            accuracy = metrics.accuracy(y_train, predictions)
+            training_accuracy.append(accuracy)
             # === Validation ===
             predictions, _ = self.predict(x_valid)
             accuracy = metrics.accuracy(y_valid, predictions)
