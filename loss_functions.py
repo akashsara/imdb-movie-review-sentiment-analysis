@@ -2,6 +2,20 @@ import numpy as np
 from nptyping import NDArray
 
 
+def binary_cross_entropy_loss(
+    y: NDArray[int], y_hat: NDArray[np.float64]
+) -> NDArray[np.float64]:
+    """
+    Binary CrossEntropy Loss is defined as:
+        loss = -[y * log(yhat) + (1 - y) * log(1 - yhat)]
+        When y = 1:
+            loss = -log(yhat)
+        When y = 0:
+            loss = -log(1 - yhat)
+    """
+    return np.where(y == 1, -np.log(y_hat), -np.log(1 - y_hat))
+
+
 def cost_function(
     y_true: NDArray[int],
     y_hat: NDArray[np.float64],
@@ -16,17 +30,3 @@ def cost_function(
     """
     losses = loss(y_true, y_hat)
     return np.sum(losses) / len(losses)
-
-
-def binary_cross_entropy_loss(
-    y: NDArray[int], y_hat: NDArray[np.float64]
-) -> NDArray[np.float64]:
-    """
-    Binary CrossEntropy Loss is defined as:
-        loss = -[y * log(yhat) + (1 - y) * log(1 - yhat)]
-        When y = 1:
-            loss = -log(yhat)
-        When y = 0:
-            loss = -log(1 - yhat)
-    """
-    return np.where(y == 1, -np.log(y_hat), -np.log(1 - y_hat))
