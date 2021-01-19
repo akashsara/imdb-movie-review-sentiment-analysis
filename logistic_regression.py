@@ -42,9 +42,11 @@ class LogisticRegression:
             sigmoid(z)
             Return predictions
         """
-        return activation_functions.sigmoid(np.dot(x, self.weights) + bias)
+        return activation_functions.sigmoid(np.dot(x, self.weights) + self.bias)
 
-    def compute_loss(y_true: NDArray[int], y_hat: NDArray[np.float64]) -> np.float64:
+    def compute_loss(
+        self, y_true: NDArray[int], y_hat: NDArray[np.float64]
+    ) -> np.float64:
         """
         Computes the value of the cost function for the given parameters.
         y_true: [N_data]
@@ -66,7 +68,7 @@ class LogisticRegression:
             Compute gradients w.r.t W and b
             Update parameters
         """
-        error = y_hat - y
+        error = y_hat - y_true
         dW = 1 / len(y_true) * np.dot(x.T, error)
         dB = 1 / len(y_true) * np.sum(error)
         self.weights -= self.learning_rate * dW
@@ -114,7 +116,7 @@ class LogisticRegression:
             predictions = self.forward(batch)
             proba.extend(predictions)
             preds.extend(np.round(predictions).astype(int))
-        return np.array(preds), proba
+        return np.array(preds), np.array(proba)
 
     def make_batches(self, x: NDArray, batch_size: int):
         """
@@ -132,7 +134,7 @@ class LogisticRegression:
         return batch_generator(x, batch_size)
 
     def shuffle_features_and_labels_together(
-        features: NDArray[int], labels: NDArray[int], seed: int
+        self, features: NDArray[int], labels: NDArray[int], seed: int
     ) -> (NDArray[int], NDArray[int]):
         """
         Shuffles the given NDArrays on the first axis alone.
@@ -176,26 +178,32 @@ class LogisticRegression:
                 Compute our validation accuracy & add to list of val accuracies.
         """
         training_loss = []
+        validation_loss = []
         training_accuracy = []
         validation_accuracy = []
-        for epoch in range(len(epochs)):
+        for epoch in range(epochs):
             # === Training ===
-            x_train, y_train = shuffle_features_and_labels_together(
+            x_train, y_train = self.shuffle_features_and_labels_together(
                 x_train, y_train, GLOBAL_SEED
             )
-            x_batches = make_batches(x_train, batch_size)
-            y_batches = make_batches(y_train, batch_size)
+            x_batches = self.make_batches(x_train, batch_size)
+            y_batches = self.make_batches(y_train, batch_size)
             loss = 0
             predictions = []
             for x, y in zip(x_batches, y_batches):
                 batch_loss, preds = self.step(x, y)
                 loss += batch_loss
                 predictions.extend(np.round(preds).astype(int))
-            training_loss.append(loss / len(batches))
-            accuracy = metrics.accuracy(y_train, predictions)
-            training_accuracy.append(accuracy)
+            loss = loss / (len(x_train) / batch_size)
+            training_loss.append(loss)
+            train_acc = metrics.accuracy(y_train, predictions)
+            training_accuracy.append(train_acc)
             # === Validation ===
-            predictions, _ = self.predict(x_valid)
-            accuracy = metrics.accuracy(y_valid, predictions)
-            validation_accuracy.append(accuracy)
-        return training_loss, validation_accuracy
+            predictions, y_hat = self.predict(x_valid)
+            validation_loss.append(self.compute_loss(y_valid, y_hat))
+            valid_acc = metrics.accuracy(y_valid, predictions)
+            validation_accuracy.append(valid_acc)
+            print(
+                f"Epoch {epoch+1}\t| Loss: {loss}\t| Train Acc: {train_acc}\t| Valid Acc: {valid_acc}"
+            )
+        return training_loss, validation_loss, training_accuracy, validation_accuracy
