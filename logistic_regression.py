@@ -3,9 +3,9 @@ from typing import Generator
 import numpy as np
 from nptyping import NDArray
 
-import loss_functions
-import helper_functions
 import activation_functions
+import helper_functions
+import loss_functions
 import metrics
 
 # TODO: Testing
@@ -17,7 +17,7 @@ class LogisticRegression:
     def __init__(
         self,
         input_shape: tuple,
-        weights_mode: tuple[str, dict],
+        weights_mode: tuple,
         bias: float = 0,
         learning_rate: float = 0.1,
     ):
@@ -174,7 +174,7 @@ class LogisticRegression:
         """
         training_loss = []
         validation_accuracy = []
-        for epoch in len(epochs):
+        for epoch in range(len(epochs)):
             # === Training ===
             x_train, y_train = shuffle_features_and_labels_together(
                 x_train, y_train, GLOBAL_SEED
