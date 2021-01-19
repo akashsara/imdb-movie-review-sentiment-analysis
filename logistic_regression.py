@@ -4,8 +4,9 @@ import numpy as np
 from nptyping import NDArray
 
 import loss_functions
-import tools
-from metrics import accuracy_metric
+import helper_functions
+import activation_functions
+import metrics
 
 # TODO: Testing
 # TODO: Set up random seeds
@@ -25,8 +26,10 @@ class LogisticRegression:
         Initialize our weights & biases.
         Set learning rate.
         """
-        self.weights = tools.initialize_weights(input_shape, mode=weights_mode)
-        self.bias = tools.initialize_bias(bias)
+        self.weights = helper_functions.initialize_weights(
+            input_shape, mode=weights_mode
+        )
+        self.bias = helper_functions.initialize_bias(bias)
         self.learning_rate = learning_rate
 
     def forward(self, x: NDArray[np.float64]) -> NDArray[np.float64]:
@@ -36,7 +39,7 @@ class LogisticRegression:
             sigmoid(z)
             Return predictions
         """
-        return tools.sigmoid(np.dot(x, self.weights) + bias)
+        return activation_functions.sigmoid(np.dot(x, self.weights) + bias)
 
     def compute_loss(y_true: NDArray[int], y_hat: NDArray[np.float64]) -> np.float64:
         """
@@ -157,6 +160,6 @@ class LogisticRegression:
             training_loss.append(loss / len(batches))
             # === Validation ===
             predictions, _ = self.predict(x_valid)
-            accuracy = accuracy_metric(y_valid, predictions)
+            accuracy = metrics.accuracy(y_valid, predictions)
             validation_accuracy.append(accuracy)
         return training_loss, validation_accuracy
