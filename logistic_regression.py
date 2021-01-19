@@ -32,7 +32,7 @@ class LogisticRegression:
         self.bias = helper_functions.initialize_bias(bias)
         self.learning_rate = learning_rate
 
-    def forward(self, x: NDArray[np.float64]) -> NDArray[np.float64]:
+    def forward(self, x: NDArray[int]) -> NDArray[np.float64]:
         """
         Our forward pass:
             z = x.W + b
@@ -78,8 +78,8 @@ class LogisticRegression:
         return loss
 
     def predict(
-        self, x: NDArray[np.float64], batch_size: int = 20
-    ) -> (NDArray[np.float64], NDArray[np.float64]):
+        self, x: NDArray[int], batch_size: int = 20
+    ) -> (NDArray[int], NDArray[np.float64]):
         """
         This is the function we'll use for making predictions.
         Make predictions on the data.
