@@ -44,7 +44,7 @@ train_loss, valid_loss, train_accuracy, valid_accuracy = model.train(
 if not os.path.exists("outputs"):
     os.mkdir("outputs")
 
-output_dir = os.path.join("outputs", int(datetime.utcnow().timestamp()))
+output_dir = os.path.join("outputs", str(int(datetime.utcnow().timestamp())))
 os.mkdir(output_dir)
 
 # Plot Graphs of Loss & Accuracy
@@ -61,4 +61,4 @@ with open(test_data_path, "rb") as fp:
 y_pred, _ = model.predict(x_test, batch_size=batch_size)
 accuracy = metrics.accuracy(y_test, y_pred)
 
-print(f"Test Set Accuracy: {Accuracy}")
+print(f"Test Set Accuracy: {accuracy}")
