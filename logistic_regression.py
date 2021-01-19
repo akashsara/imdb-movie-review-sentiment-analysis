@@ -194,16 +194,17 @@ class LogisticRegression:
                 batch_loss, preds = self.step(x, y)
                 loss += batch_loss
                 predictions.extend(np.round(preds).astype(int))
-            loss = loss / (len(x_train) / batch_size)
-            training_loss.append(loss)
+            train_loss = loss / (len(x_train) / batch_size)
+            training_loss.append(train_loss)
             train_acc = metrics.accuracy(y_train, predictions)
             training_accuracy.append(train_acc)
             # === Validation ===
             predictions, y_hat = self.predict(x_valid)
-            validation_loss.append(self.compute_loss(y_valid, y_hat))
+            valid_loss = self.compute_loss(y_valid, y_hat)
+            validation_loss.append(valid_loss)
             valid_acc = metrics.accuracy(y_valid, predictions)
             validation_accuracy.append(valid_acc)
             print(
-                f"Epoch {epoch+1}\t| Loss: {loss}\t| Train Acc: {train_acc}\t| Valid Acc: {valid_acc}"
+                f"Epoch {epoch+1}\t| Train Loss: {train_loss}\t| Valid Loss: {valid_loss}\t| Train Acc: {train_acc}\t| Valid Acc: {valid_acc}"
             )
         return training_loss, validation_loss, training_accuracy, validation_accuracy
