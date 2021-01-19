@@ -78,20 +78,20 @@ train_neg = train_neg[validation_size:]
 
 # Combine Training Data, Add Labels & Mix Training Data
 x_train = train_pos + train_neg
-y_train = [1] * len(train_pos) + [0] * len(train_neg)
+y_train = np.array([1] * len(train_pos) + [0] * len(train_neg))
 x_train, y_train = shuffle_features_and_labels_together(x_train, y_train)
 
 # Combine Validation Data, Add Labels & Mix Validation Data
 # Note:
 # Its not necessary to mix the validation data since we aren't learning from it.
 x_valid = valid_pos + valid_neg
-y_valid = [1] * len(valid_pos) + [0] * len(valid_neg)
+y_valid = np.array([1] * len(valid_pos) + [0] * len(valid_neg))
 x_valid, y_valid = shuffle_features_and_labels_together(x_valid, y_valid)
 
 # Combine Test Data, Add Labels & Mix Test Data
 # Not necessary to mix the data here either.
 x_test = test_pos + test_neg
-y_test = [1] * len(test_pos) + [0] * len(test_neg)
+y_test = np.array([1] * len(test_pos) + [0] * len(test_neg))
 x_test, y_test = shuffle_features_and_labels_together(x_test, y_test)
 
 # Construct Vocabulary from Training Data
