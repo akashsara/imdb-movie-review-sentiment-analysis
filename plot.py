@@ -12,5 +12,5 @@ def plot_per_epoch(train: List[float], val: List[float], metric: str, save_as: s
     plt.plot(val)
     plt.legend([f"training {metric}", f"validation {metric}"], loc="lower right")
     plt.xlabel("Epoch")
-    plt.ylabel(mode)
+    plt.ylabel(metric)
     plt.savefig(save_as)
