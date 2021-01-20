@@ -155,6 +155,7 @@ class LogisticRegression:
         y_valid: NDArray[int],
         epochs: int = 300,
         batch_size: int = 20,
+        choose_best_weights: bool = True,
     ):
         """
         Our training & validation loop.
@@ -180,6 +181,10 @@ class LogisticRegression:
         validation_loss = []
         training_accuracy = []
         validation_accuracy = []
+        best_validation_accuracy = 0
+        best_weights = None
+        best_bias = 0
+        best_epoch = -1
         for epoch in range(epochs):
             # === Training ===
             x_train, y_train = self.shuffle_features_and_labels_together(
@@ -205,5 +210,16 @@ class LogisticRegression:
             validation_accuracy.append(valid_acc)
             print(
                 f"Epoch {epoch+1}\t| Train Loss: {train_loss}\t| Valid Loss: {valid_loss}\t| Train Acc: {train_acc}\t| Valid Acc: {valid_acc}"
+            )
+            if choose_best_weights and valid_acc > best_validation_accuracy:
+                best_epoch = epoch
+                best_validation_accuracy = valid_acc
+                best_weights = self.weights.copy()
+                best_bias = self.bias.copy()
+        if choose_best_weights:
+            self.weights = best_weights
+            self.bias = best_bias
+            print(
+                f"Best Epoch is {best_epoch+1} with a Validation Accuracy of {best_validation_accuracy}. Using best epoch's weights and bias for the model."
             )
         return training_loss, validation_loss, training_accuracy, validation_accuracy

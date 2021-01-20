@@ -19,6 +19,7 @@ bias = 0.0
 learning_rate = 0.1
 epochs = 300
 batch_size = 20
+choose_best_weights = True
 
 with open(train_data_path, "rb") as fp:
     x_train, y_train = pickle.load(fp)
@@ -40,6 +41,7 @@ train_loss, valid_loss, train_accuracy, valid_accuracy = model.train(
     y_valid=y_valid,
     epochs=epochs,
     batch_size=batch_size,
+    choose_best_weights=choose_best_weights,
 )
 
 # Create Output Folder

@@ -26,18 +26,18 @@ Our dataset consists of 50000 movie reviews, where 25000 are positive and 25000 
 
 ## Results
 ---
-![Training vs Validation Accuracy](outputs/base/accuracy.png)
+![Training vs Validation Accuracy](outputs/base_best_weights/accuracy.png)
 Training vs Validation Accuracy
 
-![Training vs Validation Accuracy](outputs/base/loss.png)
+![Training vs Validation Accuracy](outputs/base_best_weights/loss.png)
 Training vs Validation Loss
 
-![Test Set Accuracy](outputs/base/test_accuracy.png)
-We see that our final test accuracy = 0.83596
+![Test Set Accuracy](outputs/base_best_weights/test_accuracy.png)
+We see that our final test accuracy = 0.85012
 
 ## Other Work
 
-I performed experiments with setting the bias to 1 or using 0 initialization for weights. However the problem seems to be simple enough that after 300 epochs there is no significant difference in the results.
+I performed experiments with setting the bias to 1 or using 0 initialization for weights. However the problem seems to be simple enough that after 300 epochs there is no significant difference in the results. Note that the results shown above are from taking the best epoch (based on validation accuracy) after training the model for 300 epochs. As seen in the image, the 13th epoch was the best.
 
 ## Usage
 
