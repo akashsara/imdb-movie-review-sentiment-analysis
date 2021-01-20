@@ -13,7 +13,8 @@ valid_data_path = sys.argv[2]  # data/validation_data.pkl
 test_data_path = sys.argv[3]  # data/testing_data.pkl
 
 # Experiment Parameters
-weights = ("uniform", {"low": -0.5, "high": 0.5})
+weights = ("uniform", {"low": -0.5, "high": 0.5}) 
+# Other option for weights is ("zero", {})
 bias = 0.0
 learning_rate = 0.1
 epochs = 300

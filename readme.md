@@ -38,3 +38,11 @@ We see that our final test accuracy = 0.83596
 ## Other Work
 
 I performed experiments with setting the bias to 1 or using 0 initialization for weights. However the problem seems to be simple enough that after 300 epochs there is no significant difference in the results.
+
+## Usage
+
+Simply create a new environment from `requirements.txt` and run `main.py`. The script takes in 3 command line arguments - training_data, validation_data, and testing_data. Apart from this, the first few lines of the script detail the possible parameters that can be tuned. 
+
+Note that it expects the data to be pickle files, each of which are a tuple (features, labels). Features must be an array of shape (N_data, N_features). Labels must be an array of shape (N_data) where each element is binary. 
+
+The code is general enough that it should not require any changes for different datasets, but no guarantees are provided.
