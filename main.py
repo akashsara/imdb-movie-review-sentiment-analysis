@@ -1,10 +1,11 @@
-from logistic_regression import LogisticRegression
-import plot
-import metrics
-import sys
-import pickle
 import os
+import pickle
+import sys
 from datetime import datetime
+
+import metrics
+import plot
+from logistic_regression import LogisticRegression
 
 # Data Paths
 train_data_path = sys.argv[1]  # data/training_data.pkl
