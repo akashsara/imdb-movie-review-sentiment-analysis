@@ -1,4 +1,4 @@
-# IMDB Large Movie Review Dataset
+# IMDB Large Movie Review Dataset Sentiment Prediction
 
 Created for assignment #1 of CMPUT 651 (Deep Learning for Natural Language Processing) at the University of Alberta during the Winter term of 2021.
 
@@ -25,7 +25,7 @@ Our dataset consists of 50000 movie reviews, where 25000 are positive and 25000 
 
 
 ## Results
----
+
 ![Training vs Validation Accuracy](outputs/base_best_weights/accuracy.png)
 Training vs Validation Accuracy
 
