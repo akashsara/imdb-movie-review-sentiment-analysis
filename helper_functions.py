@@ -26,8 +26,8 @@ def initialize_weights(
         raise ValueError("Invalid weight initialization mode specified")
 
 
-def initialize_bias(value: float = 0.0) -> float:
+def initialize_bias(shape: tuple = (1,), value: float = 0.0) -> NDArray[np.float64]:
     """
-    Seems like a useless function but I'd rather have this called explicitly.
+    Returns the bias of the required shape.
     """
-    return value
+    return np.full(shape=shape, fill_value=value, dtype=np.float64)

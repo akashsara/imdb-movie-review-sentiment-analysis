@@ -29,7 +29,7 @@ class LogisticRegression:
         self.weights = helper_functions.initialize_weights(
             input_shape[1], mode=weights_mode
         )
-        self.bias = helper_functions.initialize_bias(bias)
+        self.bias = helper_functions.initialize_bias((1,), bias)
         self.learning_rate = learning_rate
 
     def forward(self, x: NDArray[int]) -> NDArray[np.float64]:
