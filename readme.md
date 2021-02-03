@@ -21,10 +21,12 @@ Our dataset consists of 50000 movie reviews, where 25000 are positive and 25000 
 2. Assign a label of 1 for positive sentiment and 0 for negative sentiment.
 3. Create a vocabulary of the 2000 most common words.
 4. Convert the sentences into a feature vector of dimension 2000. Each dimension of this vector corresponds to the presence of the 2000 most common words in the vocabulary. If the word is present, the corresponding dimension is set to 1. Otherwise it is set to 0.
-5. Train a logistic regression model with learning rate 0.1, batch size of 20, uniform random initialization of weights in [-0.5, 0.5] over 300 epochs.
+5. Train a logistic regression model with sigmoid activation, learning rate 0.1, batch size of 20, uniform random initialization of weights in [-0.5, 0.5] over 300 epochs.
+OR
+5. Train a two-layer neural network with 1 hidden layer of 200 dimensions and sigmoid activation and learning rate 0.1, batch size of 20, uniform random initialization of weights in [-0.5, 0.5] over 300 epochs.
 
 
-## Results
+## Results - Logistic Regression
 
 ![Training vs Validation Accuracy](outputs/logistic_regression/base_best_weights/accuracy.png)
 Training vs Validation Accuracy
@@ -34,6 +36,19 @@ Training vs Validation Loss
 
 ![Test Set Accuracy](outputs/logistic_regression/base_best_weights/test_accuracy.png)
 We see that our final test accuracy = 0.85012
+
+## Results - Neural Network
+
+![Training vs Validation Accuracy](outputs/neural_network/base_best_weights/accuracy.png)
+Training vs Validation Accuracy
+
+![Training vs Validation Accuracy](outputs/neural_network/base_best_weights/loss.png)
+Training vs Validation Loss
+
+![Test Set Accuracy](outputs/neural_network/base_best_weights/test_accuracy.png)
+We see that our final test accuracy = 0.8342
+
+Note that the model clearly overfits within a short while, as indicated by the increasing validation loss and the perfect training accuracy.
 
 ## Other Work
 
@@ -46,3 +61,5 @@ Simply create a new environment from `requirements.txt` and run `main.py`. The s
 Note that it expects the data to be pickle files, each of which are a tuple (features, labels). Features must be an array of shape (N_data, N_features). Labels must be an array of shape (N_data) where each element is binary. 
 
 The code is general enough that it should not require any changes for different datasets, but no guarantees are provided.
+
+If you wish to run the neural network instead of the logistic regression model, repeat the same steps above but run `main_nn.py`.
