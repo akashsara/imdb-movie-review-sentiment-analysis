@@ -26,13 +26,13 @@ Our dataset consists of 50000 movie reviews, where 25000 are positive and 25000 
 
 ## Results
 
-![Training vs Validation Accuracy](outputs/base_best_weights/accuracy.png)
+![Training vs Validation Accuracy](outputs/logistic_regression/base_best_weights/accuracy.png)
 Training vs Validation Accuracy
 
-![Training vs Validation Accuracy](outputs/base_best_weights/loss.png)
+![Training vs Validation Accuracy](outputs/logistic_regression/base_best_weights/loss.png)
 Training vs Validation Loss
 
-![Test Set Accuracy](outputs/base_best_weights/test_accuracy.png)
+![Test Set Accuracy](outputs/logistic_regression/base_best_weights/test_accuracy.png)
 We see that our final test accuracy = 0.85012
 
 ## Other Work
