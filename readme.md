@@ -1,6 +1,6 @@
 # IMDB Large Movie Review Dataset Sentiment Prediction
 
-Created for assignment #1 of CMPUT 651 (Deep Learning for Natural Language Processing) at the University of Alberta during the Winter term of 2021.
+Logistic Regression & simple Neural Network from scratch on the IMDB Movie Review Sentiment Analysis dataset.
 
 The original data can be found here: [Large Movie Review Dataset](http://ai.stanford.edu/~amaas/data/sentiment/).
 
